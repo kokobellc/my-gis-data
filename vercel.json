@@ -1,0 +1,13 @@
+{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, HEAD, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Range, Origin, X-Requested-With, Content-Type, Accept" },
+        { "key": "Access-Control-Expose-Headers", "value": "Accept-Ranges, Content-Encoding, Content-Length, Content-Range" }
+      ]
+    }
+  ]
+}
