@@ -64,7 +64,15 @@ let html = `
         <div class="guide-box">
             <h2>🚀 Quy trình Upload file chi tiết (Step-by-Step)</h2>
             <p style="font-size: 14px; color: #555; margin-bottom: 20px;"><em>Chuẩn bị: Mở ổ đĩa, copy file bản đồ mới thả vào thư mục <strong>data</strong>. Sau đó mở Terminal / Git Bash ngay tại thư mục gốc <strong>my-gis-data</strong> và làm lần lượt các bước sau:</em></p>
-
+ <div class="step-box">
+                <h4><span>1</span> GOM HÀNG VÀO THÙNG</h4>
+                <p>Copy chạy một lần nếu không cần copy ở phía dưới .</p>
+                <div class="code-container">
+                    <pre id="cmd-step-1">git add .<br>git commit -m "Cap nhat file du lieu"<br>git push
+					</pre>
+                    <button class="btn-copy-code" onclick="copyCommand('cmd-step-1', this)">📋 Copy Lệnh 1</button>
+                </div>
+            </div>
             <div class="step-box">
                 <h4><span>1</span> GOM HÀNG VÀO THÙNG</h4>
                 <p>Lệnh này giúp máy tính quét toàn bộ thư mục và gom tất cả các file mới/file vừa chỉnh sửa vào một danh sách chờ xuất phát.</p>
