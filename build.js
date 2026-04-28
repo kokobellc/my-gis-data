@@ -78,7 +78,7 @@ let html = `
                 <h4><span>2</span> ĐÓNG GÓI & GHI CHÚ</h4>
                 <p>Lệnh này đóng gói các file ở Bước 1 và dán nhãn ghi chú lại. <em>(Mẹo: Bạn có thể sửa dòng chữ trong ngoặc kép để sau này dễ nhớ ngày hôm nay tải lên cái gì).</em></p>
                 <div class="code-container">
-                    <pre id="cmd-step-2">git commit -m "Cap nhat file du lieu ban do moi"</pre>
+                    <pre id="cmd-step-2">git commit -m "Cap nhat file du lieu"</pre>
                     <button class="btn-copy-code" onclick="copyCommand('cmd-step-2', this)">📋 Copy Lệnh 2</button>
                 </div>
             </div>
