@@ -13,16 +13,24 @@ let html = `
     <title>Kho Dữ Liệu GIS - KOKOBELLC</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; }
-        .container { max-width: 850px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: none; }
-        h1 { color: #1a73e8; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: none; }
+        h1 { color: #1a73e8; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 30px; }
         
-        /* Box Hướng dẫn */
-        .guide-box { background-color: #e8f0fe; border-left: 5px solid #1a73e8; padding: 20px; border-radius: 5px; margin-bottom: 30px; }
-        .guide-box h2 { color: #1557b0; margin-top: 0; font-size: 18px; }
-        .guide-box ol { margin-bottom: 15px; padding-left: 20px; color: #333; line-height: 1.6; }
-        .code-container { background: #202124; color: #58a6ff; padding: 15px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-family: monospace; font-size: 15px; margin-bottom: 10px;}
+        /* Box Hướng dẫn Tổng */
+        .guide-box { background-color: #e8f0fe; border-left: 5px solid #1a73e8; padding: 25px; border-radius: 8px; margin-bottom: 40px; }
+        .guide-box h2 { color: #1557b0; margin-top: 0; font-size: 20px; border-bottom: 1px dashed #abc2e8; padding-bottom: 10px;}
+        
+        /* Box Từng Bước (Step-by-step) */
+        .step-box { background: #ffffff; border: 1px solid #d2e3fc; padding: 15px 20px; border-radius: 6px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(26,115,232,0.05); }
+        .step-box h4 { margin: 0 0 8px 0; color: #1a73e8; font-size: 16px; display: flex; align-items: center;}
+        .step-box h4 span { background: #1a73e8; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-flex; justify-content: center; align-items: center; font-size: 14px; margin-right: 10px; }
+        .step-box p { margin: 0 0 12px 0; font-size: 14px; color: #444; line-height: 1.5; }
+        .step-box strong { color: #d93025; }
+
+        /* Code Container */
+        .code-container { background: #202124; color: #58a6ff; padding: 12px 15px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-family: monospace; font-size: 15px; }
         .code-container pre { margin: 0; white-space: pre-wrap; }
-        .btn-copy-code { background: #2ea043; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.2s; white-space: nowrap; }
+        .btn-copy-code { background: #2ea043; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.2s; white-space: nowrap; font-size: 13px;}
         .btn-copy-code:hover { background: #238636; }
 
         /* Danh sách file */
@@ -54,36 +62,53 @@ let html = `
         <h1>📁 KHO DỮ LIỆU BẢN ĐỒ CỦA TÔI</h1>
         
         <div class="guide-box">
-            <h2>🚀 Quy trình Upload file hàng ngày</h2>
-            <ol>
-                <li>Copy file dữ liệu mới dán vào thư mục <strong><code>data</code></strong> trên máy tính.</li>
-                <li>Mở Terminal tại thư mục <strong><code>my-gis-data</code></strong>.</li>
-                <li>Copy bộ 3 câu lệnh bên dưới, dán vào Terminal và nhấn <strong>Enter</strong>.</li>
-            </ol>
-            <div class="code-container">
-                <pre id="git-commands">git add .
-git commit -m "Cap nhat file du lieu"
-git push</pre>
-                <button class="btn-copy-code" onclick="copyCommand('git-commands', this)">📋 Copy Lệnh</button>
+            <h2>🚀 Quy trình Upload file chi tiết (Step-by-Step)</h2>
+            <p style="font-size: 14px; color: #555; margin-bottom: 20px;"><em>Chuẩn bị: Mở ổ đĩa, copy file bản đồ mới thả vào thư mục <strong>data</strong>. Sau đó mở Terminal / Git Bash ngay tại thư mục gốc <strong>my-gis-data</strong> và làm lần lượt các bước sau:</em></p>
+
+            <div class="step-box">
+                <h4><span>1</span> GOM HÀNG VÀO THÙNG</h4>
+                <p>Lệnh này giúp máy tính quét toàn bộ thư mục và gom tất cả các file mới/file vừa chỉnh sửa vào một danh sách chờ xuất phát.</p>
+                <div class="code-container">
+                    <pre id="cmd-step-1">git add .</pre>
+                    <button class="btn-copy-code" onclick="copyCommand('cmd-step-1', this)">📋 Copy Lệnh 1</button>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <h4><span>2</span> ĐÓNG GÓI & GHI CHÚ</h4>
+                <p>Lệnh này đóng gói các file ở Bước 1 và dán nhãn ghi chú lại. <em>(Mẹo: Bạn có thể sửa dòng chữ trong ngoặc kép để sau này dễ nhớ ngày hôm nay tải lên cái gì).</em></p>
+                <div class="code-container">
+                    <pre id="cmd-step-2">git commit -m "Cap nhat file du lieu ban do moi"</pre>
+                    <button class="btn-copy-code" onclick="copyCommand('cmd-step-2', this)">📋 Copy Lệnh 2</button>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <h4><span>3</span> ĐẨY LÊN ĐÁM MÂY (VERCEL)</h4>
+                <p>Lệnh quyết định. Nó sẽ đẩy toàn bộ kiện hàng lên Cloud. Khi thấy Terminal báo chạy xong 100%, hãy <strong>F5 (tải lại)</strong> trang web này để lấy link tải file.</p>
+                <div class="code-container">
+                    <pre id="cmd-step-3">git push</pre>
+                    <button class="btn-copy-code" onclick="copyCommand('cmd-step-3', this)">📋 Copy Lệnh 3</button>
+                </div>
             </div>
             
-            <details style="margin-top: 20px; background: #fff3cd; padding: 15px; border-radius: 5px; border: 1px solid #ffe69c;">
+            <details style="margin-top: 25px; background: #fff3cd; padding: 15px; border-radius: 5px; border: 1px solid #ffe69c;">
                 <summary style="font-weight: bold; color: #856404; cursor: pointer; font-size: 15px;">⚠️ Cách xử lý file siêu nặng (> 50MB) bằng Git LFS</summary>
                 <div style="margin-top: 15px; color: #333; font-size: 14px;">
-                    <p style="margin-top: 0;">Nếu GitHub cảnh báo file quá lớn, bạn <strong>chỉ cần chạy bộ lệnh này 1 lần duy nhất</strong> để mở rộng băng thông cho định dạng <code>.tif</code>:</p>
+                    <p style="margin-top: 0;">Nếu lúc chạy Bước 3 (git push) mà GitHub báo lỗi hoặc cảnh báo file quá lớn, bạn <strong>chỉ cần chạy khối lệnh này 1 lần duy nhất</strong>. Có thể copy dán toàn bộ 1 lần vì đây là cài đặt tự động:</p>
                     <div class="code-container" style="background: #2d2d2d;">
                         <pre id="lfs-commands">git lfs install
 git lfs track "*.tif"
 git add .gitattributes
-git commit -m "Cai dat Git LFS cho file TIF"
+git commit -m "Cai dat Git LFS"
 git push</pre>
-                        <button class="btn-copy-code" onclick="copyCommand('lfs-commands', this)">📋 Copy Lệnh LFS</button>
+                        <button class="btn-copy-code" onclick="copyCommand('lfs-commands', this)">📋 Copy Cài đặt LFS</button>
                     </div>
                 </div>
             </details>
         </div>
 
-        <h2 style="font-size: 16px; color: #333; border-bottom: 1px solid #ddd; padding-bottom: 5px;">DANH SÁCH FILE HIỆN CÓ</h2>
+        <h2 style="font-size: 18px; color: #333; border-bottom: 2px solid #ddd; padding-bottom: 8px;">📑 DANH SÁCH FILE HIỆN CÓ</h2>
         <ul class="file-list">
 `;
 
@@ -99,7 +124,7 @@ files.forEach(file => {
 
 html += `
         </ul>
-        <div class="footer">Hệ thống quản lý file tự động - KOKOBELLC</div>
+        <div class="footer">Hệ thống lưu trữ và phân phối dữ liệu GIS - KOKOBELLC</div>
     </div>
 
     <script>
@@ -132,7 +157,6 @@ html += `
             });
         }
 
-        // Hàm copy dùng chung cho cả Lệnh Git thường và Lệnh Git LFS
         function copyCommand(elementId, btnElement) {
             const code = document.getElementById(elementId).innerText;
             navigator.clipboard.writeText(code).then(() => {
@@ -150,4 +174,4 @@ html += `
 `;
 
 fs.writeFileSync(path.join(__dirname, 'index.html'), html);
-console.log('Đã tạo trang index thành công với ' + files.length + ' files và bảng hướng dẫn LFS!');
+console.log('Đã tạo trang index thành công với giao diện Step-by-Step siêu chi tiết!');
