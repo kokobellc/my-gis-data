@@ -9,5 +9,11 @@
         { "key": "Access-Control-Expose-Headers", "value": "Accept-Ranges, Content-Encoding, Content-Length, Content-Range" }
       ]
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/data/(.*)",
+      "destination": "/data/$1" 
+    }
   ]
 }
