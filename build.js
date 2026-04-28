@@ -10,10 +10,11 @@ let html = `
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kho Dữ Liệu GIS - KOKOBELLC</title>
+    <title>Kho Dữ Liệu GIS - KOKOBELLC (Public)</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; }
-        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: none; }
+        /* Đã xóa lệnh display: none; để container hiện ra ngay lập tức */
+        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         h1 { color: #1a73e8; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 30px; }
         
         /* Box Hướng dẫn Tổng */
@@ -42,37 +43,28 @@ let html = `
         .copy-btn { padding: 8px 15px; background: #1a73e8; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.2s; white-space: nowrap; }
         .copy-btn:hover { background: #1557b0; }
         
-        /* Màn hình khóa */
-        #lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #2c3e50; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; }
-        #lock-screen input { padding: 15px; font-size: 18px; border-radius: 5px; border: none; text-align: center; margin-bottom: 15px; outline: none; width: 250px;}
-        #lock-screen button { padding: 12px 30px; font-size: 16px; cursor: pointer; background: #27ae60; color: white; border: none; border-radius: 5px; font-weight: bold;}
-        #error-msg { color: #e74c3c; margin-top: 10px; display: none; font-weight: bold; }
         .footer { text-align: center; margin-top: 20px; font-size: 12px; color: #777; }
     </style>
 </head>
 <body>
-    <div id="lock-screen">
-        <h2 style="color: white; margin-bottom: 20px;">KHO DỮ LIỆU BẢO MẬT</h2>
-        <input type="password" id="pin-input" placeholder="Nhập mã PIN để vào...">
-        <button onclick="checkPin()">Mở Khóa</button>
-        <p id="error-msg">Mã PIN không đúng!</p>
-    </div>
-
     <div class="container" id="main-content">
-        <h1>📁 KHO DỮ LIỆU BẢN ĐỒ CỦA TÔI</h1>
+        <h1>📁 KHO DỮ LIỆU BẢN ĐỒ (DỰ ÁN MỞ)</h1>
         
         <div class="guide-box">
             <h2>🚀 Quy trình Upload file chi tiết (Step-by-Step)</h2>
             <p style="font-size: 14px; color: #555; margin-bottom: 20px;"><em>Chuẩn bị: Mở ổ đĩa, copy file bản đồ mới thả vào thư mục <strong>data</strong>. Sau đó mở Terminal / Git Bash ngay tại thư mục gốc <strong>my-gis-data</strong> và làm lần lượt các bước sau:</em></p>
- <div class="step-box">
-                <h4><span>1</span> CÂU LỆNH ALL IN ONE COPY 1 LẦN LÀ CHẠY</h4>
-                <p>Copy chạy một lần nếu không cần copy ở phía dưới .</p>
+            
+            <div class="step-box">
+                <h4><span>⚡</span> LỆNH GỘP (ALL-IN-ONE)</h4>
+                <p>Dành cho khi bạn đã làm quen tay. Copy 1 lần, dán vào Terminal và Enter.</p>
                 <div class="code-container">
-                    <pre id="cmd-step-1">git add .<br>git commit -m "Cap nhat file du lieu"<br>git push
-					</pre>
-                    <button class="btn-copy-code" onclick="copyCommand('cmd-step-1', this)">📋 Copy Lệnh 1</button>
+                    <pre id="cmd-step-all">git add .
+git commit -m "Cap nhat file du lieu"
+git push</pre>
+                    <button class="btn-copy-code" onclick="copyCommand('cmd-step-all', this)">📋 Copy Lệnh Nhanh</button>
                 </div>
             </div>
+
             <div class="step-box">
                 <h4><span>1</span> GOM HÀNG VÀO THÙNG</h4>
                 <p>Lệnh này giúp máy tính quét toàn bộ thư mục và gom tất cả các file mới/file vừa chỉnh sửa vào một danh sách chờ xuất phát.</p>
@@ -132,25 +124,11 @@ files.forEach(file => {
 
 html += `
         </ul>
-        <div class="footer">Hệ thống lưu trữ và phân phối dữ liệu GIS - KOKOBELLC</div>
+        <div class="footer">Hệ thống lưu trữ và phân phối dữ liệu GIS (Public) - KOKOBELLC</div>
     </div>
 
     <script>
-        const SECRET_PIN = "123456"; 
-
-        function checkPin() {
-            const input = document.getElementById('pin-input').value;
-            if(input === SECRET_PIN) {
-                document.getElementById('lock-screen').style.display = 'none';
-                document.getElementById('main-content').style.display = 'block';
-            } else {
-                document.getElementById('error-msg').style.display = 'block';
-            }
-        }
-
-        document.getElementById('pin-input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') checkPin();
-        });
+        // Đã xóa toàn bộ Script liên quan đến checkPin() và SECRET_PIN
 
         function copyToClipboard(path, btnElement) {
             const fullUrl = window.location.origin + path;
@@ -182,4 +160,4 @@ html += `
 `;
 
 fs.writeFileSync(path.join(__dirname, 'index.html'), html);
-console.log('Đã tạo trang index thành công với giao diện Step-by-Step siêu chi tiết!');
+console.log('Đã tạo trang index thành công với giao diện Public hoàn toàn!');
