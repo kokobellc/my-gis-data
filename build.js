@@ -1,12 +1,15 @@
+// 1. GỌI ĐỒ NGHỀ (THƯ VIỆN)
 const fs = require('fs');
 const path = require('path');
 
-// Đường dẫn tới thư mục data
+// 2. XÁC ĐỊNH MỤC TIÊU (TÌM THƯ MỤC DATA)
 const dataDir = path.join(__dirname, 'data');
 
-// Đọc danh sách file, bỏ qua file ẩn
+// 3. QUÉT THƯ MỤC VÀ LẤY DANH SÁCH FILE
+// Lệnh này đọc tất cả file, nhưng bộ lọc .filter() sẽ loại bỏ các file rác bị ẩn (những file có tên bắt đầu bằng dấu chấm)
 const files = fs.readdirSync(dataDir).filter(file => !file.startsWith('.'));
 
+// 4. XÂY DỰNG KHUNG GIAO DIỆN (HTML & CSS)
 let html = `
 <!DOCTYPE html>
 <html lang="vi">
@@ -15,11 +18,12 @@ let html = `
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kho Dữ Liệu GIS - KOKOBELLC</title>
     <style>
+        /* PHẦN TRANG TRÍ (CSS) */
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; }
         .container { max-width: 850px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: none; }
         h1 { color: #1a73e8; text-align: center; border-bottom: 2px solid #eee; padding-bottom: 10px; }
         
-        /* Box Hướng dẫn */
+        /* Hộp Hướng dẫn */
         .guide-box { background-color: #e8f0fe; border-left: 5px solid #1a73e8; padding: 20px; border-radius: 5px; margin-bottom: 30px; }
         .guide-box h2 { color: #1557b0; margin-top: 0; font-size: 18px; }
         .guide-box ol { margin-bottom: 15px; padding-left: 20px; color: #333; line-height: 1.6; }
@@ -37,7 +41,7 @@ let html = `
         .copy-btn { padding: 8px 15px; background: #1a73e8; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.2s; white-space: nowrap; }
         .copy-btn:hover { background: #1557b0; }
         
-        /* Màn hình khóa */
+        /* Màn hình khóa PIN */
         #lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #2c3e50; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; }
         #lock-screen input { padding: 15px; font-size: 18px; border-radius: 5px; border: none; text-align: center; margin-bottom: 15px; outline: none; width: 250px;}
         #lock-screen button { padding: 12px 30px; font-size: 16px; cursor: pointer; background: #27ae60; color: white; border: none; border-radius: 5px; font-weight: bold;}
@@ -77,6 +81,8 @@ git push</pre>
         <ul class="file-list">
 `;
 
+// 5. TỰ ĐỘNG IN RA DANH SÁCH FILE (VÒNG LẶP)
+// Đoạn này lấy từng file tìm được ở bước 3, tạo ra một hàng chứa Tên File và Nút Copy
 files.forEach(file => {
     const fileUrl = `/data/${file}`;
     html += `
@@ -87,42 +93,49 @@ files.forEach(file => {
     `;
 });
 
+// 6. GẮN "NÃO BỘ" CHO GIAO DIỆN (JAVASCRIPT TẠI TRÌNH DUYỆT)
 html += `
         </ul>
         <div class="footer">Hệ thống quản lý file tự động - KOKOBELLC</div>
     </div>
 
     <script>
-        // BẠN CÓ THỂ ĐỔI MÃ PIN TẠI ĐÂY (đang để mặc định là 123456)
-        const SECRET_PIN = "123456"; 
+        // --- CẤU HÌNH MẬT KHẨU ---
+        const SECRET_PIN = "123456"; // Đổi số này thành mật khẩu riêng của bạn
 
+        // Hàm kiểm tra Mật khẩu
         function checkPin() {
             const input = document.getElementById('pin-input').value;
             if(input === SECRET_PIN) {
+                // Nếu đúng: Ẩn màn hình khóa, Hiện nội dung chính
                 document.getElementById('lock-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
             } else {
+                // Nếu sai: Hiện dòng chữ báo lỗi
                 document.getElementById('error-msg').style.display = 'block';
             }
         }
 
+        // Cho phép ấn phím Enter để mở khóa thay vì phải click chuột
         document.getElementById('pin-input').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') checkPin();
         });
 
+        // Hàm xử lý việc Copy Link Bản đồ
         function copyToClipboard(path, btnElement) {
             const fullUrl = window.location.origin + path;
             navigator.clipboard.writeText(fullUrl).then(() => {
                 const originalText = btnElement.innerText;
                 btnElement.innerText = "✔️ Đã Copy Link!";
-                btnElement.style.background = "#28a745";
+                btnElement.style.background = "#28a745"; // Đổi màu xanh lá
                 setTimeout(() => {
                     btnElement.innerText = originalText;
-                    btnElement.style.background = "#1a73e8";
+                    btnElement.style.background = "#1a73e8"; // Trả lại màu cũ sau 2 giây
                 }, 2000);
             });
         }
 
+        // Hàm xử lý việc Copy 3 câu lệnh Git
         function copyGitCommands(btnElement) {
             const code = document.getElementById('git-commands').innerText;
             navigator.clipboard.writeText(code).then(() => {
@@ -139,5 +152,7 @@ html += `
 </html>
 `;
 
+// 7. XUẤT XƯỞNG (TẠO FILE INDEX.HTML)
+// Lệnh này lấy toàn bộ nội dung HTML vừa được nhào nặn ở trên và lưu thành file index.html thật
 fs.writeFileSync(path.join(__dirname, 'index.html'), html);
 console.log('Đã tạo trang index thành công với ' + files.length + ' files và bảng hướng dẫn!');
